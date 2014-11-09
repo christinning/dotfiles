@@ -1,9 +1,13 @@
+alias chrome='open -a "Google Chrome"'
+
+export DOCKER_HOST=tcp://localhost:4243
+
 export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 export JAVA_HOME=`/usr/libexec/java_home`
 export GROOVY_HOME=/usr/local/Cellar/groovy/2.0.5/libexec
 
-export GRADLE_HOME=/Users/chris/opt/gradle-1.0-milestone-7
+export GRADLE_HOME=/Users/chris/opt/gradle
 export PATH=$PATH:$GRADLE_HOME/bin
 
 #export SCALA_HOME=/Users/chris/opt/scala/current
