@@ -16,6 +16,9 @@
 
 (load-theme 'zenburn t)
 
+;; switch off annoying beeps
+(setq ring-bell-function #'ignore)
+
 (require 'rainbow-delimiters)
 (global-rainbow-delimiters-mode)
 
@@ -36,6 +39,9 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;
 ;; keybinding management
+
+;; Set right alt key to be S super
+(setq mac-right-option-modifier ‘super)
 
 (define-key sp-keymap (kbd "C-M-f") 'sp-forward-sexp)
 (define-key sp-keymap (kbd "C-M-b") 'sp-backward-sexp)
