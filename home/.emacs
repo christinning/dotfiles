@@ -1,8 +1,9 @@
 
 (require 'package)
-(add-to-list 'package-archives 
-    '("marmalade" .
-      "http://marmalade-repo.org/packages/"))
+
+(add-to-list 'package-archives
+             '("melpa" . "http://melpa.org/packages/") t)
+
 (package-initialize)
 
 (unless (package-installed-p 'cider)
@@ -11,6 +12,23 @@
 (unless (package-installed-p 'smartparens)
   (package-install 'smartparens))
 
+
+(unless (package-installed-p 'project-explorer)
+  (package-install 'project-explorer))
+
+
+
+;; on OSX when launched from gui we need to get shell env
+(unless (package-installed-p 'exec-path-from-shell)
+  (package-install 'exec-path-from-shell))
+(when (memq window-system '(mac ns))
+  (exec-path-from-shell-initialize))
+
+(setq nrepl-popup-stacktraces nil)
+(setq nrepl-popup-stacktraces-in-repl t)
+
+;; when running shell scroll with output
+(setq comint-scroll-show-maximum-output t)
 
 (set-default-font "Inconsolata-12")
 
@@ -115,3 +133,10 @@
 ;;; lisp modes
 (sp-with-modes sp--lisp-modes
   (sp-local-pair "(" nil :bind "C-("))
+
+(setq-default indent-tabs-mode nil)
+(setq-default tab-width 2)
+
+;;; autocomplete
+(add-hook 'cider-repl-mode-hook 'company-mode)
+(add-hook 'cider-mode-hook 'company-mode)
