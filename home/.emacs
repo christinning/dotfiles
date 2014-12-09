@@ -21,6 +21,7 @@
 
 (unless (package-installed-p 'clojure-cheatsheet)
   (package-install 'clojure-cheatsheet))
+(define-key clojure-mode-map (kbd "C-c C-s") 'clojure-cheatsheet)
 
 (unless (package-installed-p 'project-explorer)
   (package-install 'project-explorer))
@@ -35,8 +36,6 @@
 (setq nrepl-hide-special-buffers t)
 (setq cider-show-error-buffer 'except-in-repl)
 (add-hook 'clojure-mode-hook 'cider-mode)
-(add-hook 'cider-mode-hook 'cider-turn-on-eldoc-mode)
-
 
 (show-paren-mode 1)
 
