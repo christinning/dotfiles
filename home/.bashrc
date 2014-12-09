@@ -12,6 +12,10 @@ if [[ "$OSTYPE" == "darwin"* ]];
     then if [ -e "$HOME/.bashrc.osx" ];
 	then source $HOME/.bashrc.osx
     fi
+elif [[ "$OSTYPE" == "linux"* ]];
+    then if [ -e "$HOME/.bashrc.ubuntu" ];
+	then source $HOME/.bashrc.ubuntu
+    fi
 fi
 
 
