@@ -35,6 +35,7 @@
 (setq nrepl-hide-special-buffers t)
 (setq cider-show-error-buffer 'except-in-repl)
 (add-hook 'clojure-mode-hook 'cider-mode)
+(add-hook 'cider-mode-hook 'cider-turn-on-eldoc-mode)
 
 
 (show-paren-mode 1)
@@ -96,3 +97,5 @@
 ;; autocomplete
 (add-hook 'cider-repl-mode-hook 'company-mode)
 (add-hook 'cider-mode-hook 'company-mode)
+(setq company-idle-delay 0.2)
+(setq company-auto-complete nil)
