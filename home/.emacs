@@ -15,6 +15,10 @@
 (unless (package-installed-p 'paredit)
   (package-install 'paredit))
 
+(add-hook 'emacs-lisp-mode-hook 'paredit-mode)
+(add-hook 'clojure-mode-hook 'paredit-mode)
+(add-hook 'cider-repl-mode-hook 'paredit-mode)
+
 (unless (package-installed-p 'clojure-cheatsheet)
   (package-install 'clojure-cheatsheet))
 
@@ -29,15 +33,9 @@
 
 ;; cider config
 (setq nrepl-hide-special-buffers t)
-(add-hook 'cider-mode-hook 'cider-turn-on-eldoc-mode)
 (setq cider-show-error-buffer 'except-in-repl)
 (add-hook 'clojure-mode-hook 'cider-mode)
-(add-hook 'emacs-lisp-mode-hook 'paredit-mode) 
 
-
-(add-hook 'cider-mode 'paredit-mode)
-(add-hook 'emacs-lisp-mode 'paredit-mode)
-(add-hook 'cider-repl-mode-hook 'paredit-mode)
 
 (show-paren-mode 1)
 
@@ -53,6 +51,10 @@
 ;; when running shell scroll with output
 (setq comint-scroll-show-maximum-output t)
 
+
+;;
+;; APPEARANCE
+;;
 (set-default-font "Inconsolata-12")
 
 (unless (package-installed-p 'molokai-theme)
@@ -66,13 +68,15 @@
 
 (load-theme 'noctilux t)
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 ;; switch off annoying beeps
 (setq ring-bell-function #'ignore)
 (unless (package-installed-p 'rainbow-delimiters)
   (package-install 'rainbow-delimiters))
-
 (require 'rainbow-delimiters)
-(global-rainbow-delimiters-mode)
+(add-hook 'clojure-mode-hook 'rainbow-delimiters-mode)
+(add-hook 'cider-mode-hook 'rainbow-delimiters-mode)
 
 ;; Allow hash to be entered  
 (global-set-key (kbd "M-3") '(lambda () (interactive) (insert "#")))
@@ -92,4 +96,3 @@
 ;; autocomplete
 (add-hook 'cider-repl-mode-hook 'company-mode)
 (add-hook 'cider-mode-hook 'company-mode)
-
