@@ -21,6 +21,7 @@
 
 (unless (package-installed-p 'clojure-cheatsheet)
   (package-install 'clojure-cheatsheet))
+(require 'clojure-mode)
 (define-key clojure-mode-map (kbd "C-c C-s") 'clojure-cheatsheet)
 
 (unless (package-installed-p 'project-explorer)
