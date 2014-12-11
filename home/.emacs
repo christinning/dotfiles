@@ -33,6 +33,11 @@
   rainbow-mode rainbow-mode)
 (global-rainbow-mode 1)
 
+(unless (package-installed-p 'column-marker)
+  (package-install 'column-marker))
+(add-hook 'cider-mode-hook (lambda () (interactive) (column-marker-1 80)))
+(add-hook 'emacs-lisp-mode-hook  (lambda () (interactive) (column-marker-1 80)))
+
 ;; cider config
 (setq nrepl-hide-special-buffers t)
 (setq cider-show-error-buffer 'except-in-repl)
@@ -97,5 +102,6 @@
 ;; autocomplete
 (add-hook 'cider-repl-mode-hook 'company-mode)
 (add-hook 'cider-mode-hook 'company-mode)
+(add-hook 'emacs-lisp-mode-hook 'company-mode)
 (setq company-idle-delay 0.2)
 (setq company-auto-complete nil)
