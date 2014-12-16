@@ -43,7 +43,11 @@
 (setq cider-show-error-buffer 'except-in-repl)
 (add-hook 'clojure-mode-hook 'cider-mode)
 
+(require 'paren)
+(set-face-background 'show-paren-match "#cccccc")
+(set-face-foreground 'show-paren-match "#202020")
 (show-paren-mode 1)
+(setq show-paren-style 'mixed)
 
 ;; on OSX when launched from gui we need to get shell env
 (unless (package-installed-p 'exec-path-from-shell)
@@ -61,7 +65,7 @@
 ;;
 ;; APPEARANCE
 ;;
-(set-default-font "Inconsolata-12")
+(set-default-font "Inconsolata-14")
 
 (unless (package-installed-p 'molokai-theme)
   (package-install 'molokai-theme))
@@ -105,3 +109,4 @@
 (add-hook 'emacs-lisp-mode-hook 'company-mode)
 (setq company-idle-delay 0.2)
 (setq company-auto-complete nil)
+
