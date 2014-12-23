@@ -1,46 +1,62 @@
 (require 'package)
 
 (add-to-list 'package-archives
+             '("melpa-stable" . "http://stable.melpa.org/packages/") t)
+(add-to-list 'package-archives
              '("melpa" . "http://melpa.org/packages/") t)
 
-(package-initialize)
-(package-refresh-contents)
+;; Check if we're on Emacs 24.4 or newer, if so, use the pinned package feature
+(when (boundp 'package-pinned-packages)
+  (setq package-pinned-packages
+                '((cider              . "melpa-stable")
+                  (clojure-mode       . "melpa-stable")
+                  (company            . "melpa-stable")
+                  (rainbow-delimiters . "melpa-stable")
+                  ;; "unstable" package
+                  )))
 
-(unless (package-installed-p 'cider)
-  (package-install 'cider))
+(setq required-package-list '(
+			      cider
+			      clojure-mode
+			      rainbow-delimiters
+			      company
+			      clojure-cheatsheet
+			      project-explorer
+			      rainbow-mode
+			      column-marker
+			      exec-path-from-shell
+			      noctilux-theme))
 
-(unless (package-installed-p 'company)
-  (package-install 'company))
+(package-initialize t)
+(defun install-required-packages (package-list)
+  (when (>= emacs-major-version 24)
+    (package-refresh-contents)
+    (mapc (lambda (package)
+            (unless (require package nil t)
+              (package-install package)))
+          package-list)))
 
-(unless (package-installed-p 'paredit)
-  (package-install 'paredit))
+(install-required-packages required-package-list)
 
 (add-hook 'emacs-lisp-mode-hook 'paredit-mode)
 (add-hook 'clojure-mode-hook 'paredit-mode)
 (add-hook 'cider-repl-mode-hook 'paredit-mode)
 
-(unless (package-installed-p 'clojure-cheatsheet)
-  (package-install 'clojure-cheatsheet))
 (require 'clojure-mode)
 (define-key clojure-mode-map (kbd "C-c C-s") 'clojure-cheatsheet)
 
-(unless (package-installed-p 'project-explorer)
-  (package-install 'project-explorer))
 
-(unless (package-installed-p 'rainbow-mode)
-  (package-install 'rainbow-mode))
 (define-globalized-minor-mode global-rainbow-mode
   rainbow-mode rainbow-mode)
 (global-rainbow-mode 1)
 
-(unless (package-installed-p 'column-marker)
-  (package-install 'column-marker))
 (add-hook 'cider-mode-hook (lambda () (interactive) (column-marker-1 80)))
 (add-hook 'emacs-lisp-mode-hook  (lambda () (interactive) (column-marker-1 80)))
 
 ;; cider config
 (setq nrepl-hide-special-buffers t)
-(setq cider-show-error-buffer 'except-in-repl)
+(setq cider-show-error-buffer nil)
+(setq cider-auto-select-error-buffer nil)
 (add-hook 'clojure-mode-hook 'cider-mode)
 
 (require 'paren)
@@ -50,8 +66,6 @@
 (setq show-paren-style 'mixed)
 
 ;; on OSX when launched from gui we need to get shell env
-(unless (package-installed-p 'exec-path-from-shell)
-  (package-install 'exec-path-from-shell))
 (when (memq window-system '(mac ns))
   (exec-path-from-shell-initialize))
 
@@ -66,24 +80,12 @@
 ;; APPEARANCE
 ;;
 (set-default-font "Inconsolata-14")
-
-(unless (package-installed-p 'molokai-theme)
-  (package-install 'molokai-theme))
-
-(unless (package-installed-p 'noctilux-theme)
-  (package-install 'noctilux-theme))
-
-(unless (package-installed-p 'hc-zenburn-theme)
-  (package-install 'hc-zenburn-theme))
-
 (load-theme 'noctilux t)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; switch off annoying beeps
 (setq ring-bell-function #'ignore)
-(unless (package-installed-p 'rainbow-delimiters)
-  (package-install 'rainbow-delimiters))
 (require 'rainbow-delimiters)
 (add-hook 'clojure-mode-hook 'rainbow-delimiters-mode)
 (add-hook 'cider-mode-hook 'rainbow-delimiters-mode)
