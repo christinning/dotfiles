@@ -19,6 +19,7 @@
 			      cider
 			      clojure-mode
 			      rainbow-delimiters
+			      paredit
 			      company
 			      clojure-cheatsheet
 			      project-explorer
@@ -27,12 +28,12 @@
 			      exec-path-from-shell
 			      noctilux-theme))
 
-(package-initialize t)
+(package-initialize)
 (defun install-required-packages (package-list)
   (when (>= emacs-major-version 24)
     (package-refresh-contents)
     (mapc (lambda (package)
-            (unless (require package nil t)
+            (unless (package-installed-p package)
               (package-install package)))
           package-list)))
 
@@ -59,11 +60,6 @@
 (setq cider-auto-select-error-buffer nil)
 (add-hook 'clojure-mode-hook 'cider-mode)
 
-(require 'paren)
-(set-face-background 'show-paren-match "#cccc67")
-(set-face-foreground 'show-paren-match "#303030")
-(show-paren-mode 1)
-(setq show-paren-style 'mixed)
 
 ;; on OSX when launched from gui we need to get shell env
 (when (memq window-system '(mac ns))
@@ -81,6 +77,13 @@
 ;;
 (set-default-font "Inconsolata-14")
 (load-theme 'noctilux t)
+
+;; Set faces after theme load or they are overwritten
+(require 'paren)
+(set-face-background 'show-paren-match "#cccc67")
+(set-face-foreground 'show-paren-match "#303030")
+(show-paren-mode 1)
+(setq show-paren-style 'mixed)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
