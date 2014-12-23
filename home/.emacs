@@ -44,8 +44,8 @@
 (add-hook 'clojure-mode-hook 'cider-mode)
 
 (require 'paren)
-(set-face-background 'show-paren-match "#cccccc")
-(set-face-foreground 'show-paren-match "#202020")
+(set-face-background 'show-paren-match "#cccc67")
+(set-face-foreground 'show-paren-match "#303030")
 (show-paren-mode 1)
 (setq show-paren-style 'mixed)
 
